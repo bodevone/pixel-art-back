@@ -5,7 +5,7 @@ const io = require('socket.io').listen(process.env.PORT || 4000).sockets
 const assert = require('assert')
 
 // Connect to mongo
-mongo.connect('mongodb://127.0.0.1/mongopixel', {useUnifiedTopology: true, useNewUrlParser: true}, (err, database) => {
+mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useUnifiedTopology: true, useNewUrlParser: true}, (err, database) => {
   assert.equal(err, null)
 
   console.log('MongoDB connected...')
