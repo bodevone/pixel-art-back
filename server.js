@@ -31,7 +31,7 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
       assert.equal(err, null)
 
       console.log("Found the following pixels")
-      console.log(result)
+      // console.log(result)
 
       // Emit the pixels
       socket.emit('pixels', result)
@@ -63,7 +63,9 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
           // Get pixels from mongo collections
           // pixelsCollection = db.collection('pixels')
 
-          io.emit('color changed', data)
+          console.log(data)
+
+          io.emit('color changed', [data])
 
         })
     })
