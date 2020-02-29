@@ -63,15 +63,8 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
           // Get pixels from mongo collections
           // pixelsCollection = db.collection('pixels')
 
-          pixelsCollection.find({}).toArray((err, result) => {
-            assert.equal(err, null)
+          io.emit('color changed', data)
 
-            console.log("Found the following pixels")
-            // console.log(result)
-
-            // Emit the pixels
-            io.emit('pixels', result)
-          })
         })
     })
   })
