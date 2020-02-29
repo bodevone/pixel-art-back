@@ -11,7 +11,7 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
   console.log('MongoDB connected...')
 
   let db = database.db(process.env.MONGODB_NAME || 'mongopixel')
-  // let pixelsCollection = db.collection('pixels')
+  let pixelsCollection = db.collection('pixels')
 
   var pixels = []
   var id = 1
@@ -22,7 +22,7 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
     }
   }
 
-  db.pixels.insert(pixels)
+  pixelsCollection.insert(pixels)
 
 
 
