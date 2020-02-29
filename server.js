@@ -1,7 +1,7 @@
 const mongo = require('mongodb').MongoClient
 // const app = require('express')()
 // const server = require('http').Server(app)
-const io = require('socket.io').listen(4000).sockets
+const io = require('socket.io').listen(process.env.PORT || 4000).sockets
 const assert = require('assert')
 
 // Connect to mongo
