@@ -16,7 +16,7 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
 
   // Connect to socket io
   io.on('connection', (socket) => {
-    let db = database.db('mongopixel')
+    let db = database.db(process.env.MONGODB_NAME || 'mongopixel')
     let pixelsCollection = db.collection('pixels')
 
     console.log("New connection...")
@@ -31,7 +31,7 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
       assert.equal(err, null)
 
       console.log("Found the following pixels")
-      // console.log(result)
+      console.log(result)
 
       // Emit the pixels
       socket.emit('pixels', result)
