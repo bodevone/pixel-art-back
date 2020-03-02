@@ -21,10 +21,11 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
 
     console.log("New connection...")
 
-    //Function to send status
-    // sendStatus = (s) => {
-    //   socket.emit('status', s)
-    // }
+    console.log(io.server.engine.clientsCount)
+
+    let userCount = io.server.engine.clientsCount
+    io.emit('user count', userCount)
+
 
     // Get pixels from mongo collections
     pixelsCollection.find({}).toArray((err, result) => {
@@ -68,6 +69,12 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
           io.emit('color changed', [data])
 
         })
+    })
+
+    socket.on('disconnect', () => {
+      
+      let userCount = io.server.engine.clientsCount
+      io.emit('user count', userCount)
     })
   })
 
