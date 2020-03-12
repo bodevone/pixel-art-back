@@ -35,12 +35,23 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
 
       console.log("Found the following pixels")
       console.log(result)
+
+      pixels.maxRow = result[0].maxRow
+      pixels.maxCol = result[0].maxCol
+
       for (var i=1; i<result.length; i++) {
+        var color
+        var index
         for (var data in result[i]) {
           if (data == "_id") continue
-          pixels[data] = result[i][data]
+          if (data == "id") index = result[i][data]
+          if (data == "color") color = result[i][data]
         }
+        pixels[index] = color
+
       }
+
+      console.log(pixels)
 
       // Emit the pixels
       socket.emit('pixels', pixels)
@@ -48,35 +59,39 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
 
     //Handle event
     socket.on('change color', (data) => {
-      let id = parseInt(data.id)
-      let color = data.color
 
       console.log("Color change event")
 
+      console.log(data)
 
-      pixelsCollection.updateOne(
-        {id: id},
-        {
-          $set: {
-            color: color
+      newData = {}
+
+      for (var index in data) {
+        newData.id = index
+        newData.color = data[index]
+      }
+
+
+      pixelsCollection.find(newData).toArray((err, results) => {
+        if (results.length == 0) {
+          console.log("NETU")
+          pixelsCollection.insertOne(newData)
+        } else {
+          console.log("EST")
+          for (var id in data) {
+            pixelsCollection.updateOne({id: id}, {$set: {color: data[id]}},
+              (err, results) => {
+                console.log("Changed color in DB")
+
+                console.log(data)
+
+              })
           }
-        },
-        (err, result) => {
-          assert.equal(err, null)
+        }
+        io.emit('color changed', data)
 
-          // assert.equal(1, result.result.n);
+      })
 
-          console.log("Changed color in DB")
-          // console.log(results)
-
-          // Get pixels from mongo collections
-          // pixelsCollection = db.collection('pixels')
-
-          console.log(data)
-
-          io.emit('color changed', [data])
-
-        })
     })
 
     socket.on('disconnect', () => {
