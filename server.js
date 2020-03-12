@@ -31,11 +31,19 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
     pixelsCollection.find({}).toArray((err, result) => {
       assert.equal(err, null)
 
+      pixels = {}
+
       console.log("Found the following pixels")
-      // console.log(result)
+      console.log(result)
+      for (var i=1; i<result.length; i++) {
+        for (var data in result[i]) {
+          if (data == "_id") continue
+          pixels[data] = result[i][data]
+        }
+      }
 
       // Emit the pixels
-      socket.emit('pixels', result)
+      socket.emit('pixels', pixels)
     })
 
     //Handle event
