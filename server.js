@@ -1,6 +1,4 @@
 const mongo = require('mongodb').MongoClient
-// const app = require('express')()
-// const server = require('http').Server(app)
 const io = require('socket.io').listen(process.env.PORT || 4000).sockets
 const assert = require('assert')
 
@@ -10,8 +8,6 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
 
   console.log('MongoDB connected...')
 
-
-  // server.listen(4000, () => {
   console.log('Listening on port 4000...')
 
   // Connect to socket io
@@ -34,7 +30,6 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
       pixels = {}
 
       console.log("Found the following pixels")
-      console.log(result)
 
       pixels.maxRow = result[0].maxRow
       pixels.maxCol = result[0].maxCol
@@ -51,8 +46,6 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
 
       }
 
-      console.log(pixels)
-
       // Emit the pixels
       socket.emit('pixels', pixels)
     })
@@ -61,8 +54,6 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
     socket.on('change color', (data) => {
 
       console.log("Color change event")
-
-      console.log(data)
 
       newData = {}
 
@@ -83,8 +74,6 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
               (err, results) => {
                 console.log("Changed color in DB")
 
-                console.log(data)
-
               })
           }
         }
@@ -100,7 +89,5 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
       io.emit('user count', userCount)
     })
   })
-
-  // })
 
 })
