@@ -31,10 +31,18 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
 
       console.log("Found the following pixels")
 
-      pixels.maxRow = result[0].maxRow
-      pixels.maxCol = result[0].maxCol
+      for (var i=0; i< result.length; i++) {
+        if (result[i]._id == 0) {
+          pixels.maxRow = result[i].maxRow
+          pixels.maxCol = result[i].maxCol
+          break
+        }
+      }
 
-      for (var i=1; i<result.length; i++) {
+      for (var i=0; i<result.length; i++) {
+        console.log(result[i])
+        if (result[i]._id == 0) continue
+
         var color
         var index
         for (var data in result[i]) {
