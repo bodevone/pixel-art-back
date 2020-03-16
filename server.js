@@ -40,7 +40,6 @@ mongo.connect(process.env.MONGODB_URI || 'mongodb://localhost/mongopixel', {useU
       }
 
       for (var i=0; i<result.length; i++) {
-        console.log(result[i])
         if (result[i]._id == 0) continue
 
         var color
