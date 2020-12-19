@@ -2,7 +2,6 @@ import os
 import json
 
 from flask import Flask, Response
-from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 from flask_pymongo import PyMongo
 from bson.json_util import dumps
@@ -13,9 +12,10 @@ DB_USERNAME = os.environ.get('DB_USERNAME')
 DB_PASSWORD = os.environ.get('DB_PASSWORD')
 DB_HOST = os.environ.get('DB_HOST')
 DB_NAME = os.environ.get('DB_NAME')
+PORT = os.environ.get('PORT')
+DEBUG = int(os.environ.get('DEBUG'))
 
 app = Flask(__name__)
-CORS(app)
 app.config["MONGO_URI"] = f"mongodb+srv://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}?retryWrites=true&w=majority"
 mongo = PyMongo(app)
 pixels_collection = mongo.db.pixels
@@ -61,12 +61,7 @@ def handle_change_color(pixel_data):
     emit('color changed', pixel, broadcast=True)
 
 
-@app.route('/ping')
-def hello_world():
-    return Response('pong')
-
-
 if __name__ == '__main__':
     socketio.run(
-        app, host='0.0.0.0', port=5000
+        app, host='0.0.0.0', port=PORT, debug=DEBUG
     )

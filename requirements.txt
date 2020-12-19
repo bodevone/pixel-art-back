@@ -3,7 +3,6 @@ click==7.1.2
 dnspython==2.0.0
 email-validator==1.1.2
 Flask==1.1.2
-Flask-Cors==3.0.9
 Flask-PyMongo==2.3.0
 Flask-SocketIO==4.3.2
 Flask-WTF==0.14.3
