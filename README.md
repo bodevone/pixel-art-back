@@ -1,3 +1,7 @@
 # Pixel Art Back
 
-The back for [Pixel Art](https://github.com/bodevone/pixel-art)
+Backend for pixel art
+
+### [Visit the site](https://bodevone.github.io/pixel-art/)
+
+#### [Frontend repo](https://github.com/bodevone/pixel-art-back)
