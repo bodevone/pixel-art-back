@@ -3,8 +3,9 @@ click==7.1.2
 dnspython==2.0.0
 email-validator==1.1.2
 Flask==1.1.2
-flask-mongoengine==1.0.0
-Flask-SocketIO==5.0.0
+Flask-Cors==3.0.9
+Flask-PyMongo==2.3.0
+Flask-SocketIO==4.3.2
 Flask-WTF==0.14.3
 idna==2.10
 itsdangerous==1.1.0
@@ -13,7 +14,8 @@ MarkupSafe==1.1.1
 mongoengine==0.22.1
 pymongo==3.11.2
 python-dotenv==0.15.0
-python-engineio==4.0.0
-python-socketio==5.0.3
+python-engineio==3.13.2
+python-socketio==4.6.1
+six==1.15.0
 Werkzeug==1.0.1
 WTForms==2.3.3
